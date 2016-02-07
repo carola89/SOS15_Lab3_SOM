@@ -164,7 +164,7 @@ public class HexGrowingSOM extends GrowingSOM {
                 "finished" + networkModelName + "(" + som.getLayer().getGridLayout() + ", "
                         + som.getLayer().getGridTopology() + ")");
         
-        FuzzyColourCodingVisualiser visualizer = new FuzzyColourCodingVisualiser();
+        MyFuzzyColourCodingVisualiser visualizer = new MyFuzzyColourCodingVisualiser();
         try {
 			BufferedImage img = visualizer.createVisualization(0, som, 5000, 5000);
 			File outputfile = new File(fileProps.outputDirectory() + "/som.png");
