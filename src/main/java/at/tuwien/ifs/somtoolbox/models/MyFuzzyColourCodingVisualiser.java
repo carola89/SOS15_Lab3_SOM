@@ -51,7 +51,7 @@ public class MyFuzzyColourCodingVisualiser extends FuzzyColourCodingVisualiser {
         // transform to a similarity matrix - Equation (1) in Himberg 2000.
         DoubleMatrix2D similarityMatrix = unitDistanceMatrix.copy();
         similarityMatrix.assign(new DoubleFunction() {
-            @Override
+           // @Override
             public double apply(double argument) {
                 return Math.exp(-(argument * argument / T));
             }
@@ -62,7 +62,7 @@ public class MyFuzzyColourCodingVisualiser extends FuzzyColourCodingVisualiser {
             DoubleMatrix1D row = similarityMatrix.viewRow(i);
             final double sum = row.aggregate(Functions.plus, Functions.identity);
             row.assign(new DoubleFunction() {
-                @Override
+                //@Override
                 public double apply(double argument) {
                     return argument / sum;
                 }
@@ -172,7 +172,7 @@ public class MyFuzzyColourCodingVisualiser extends FuzzyColourCodingVisualiser {
                             	Point end2 = getLinePos(unitWidth, unitHeight, locations[i+1][j + 1]);
                                 VisualisationUtils.drawThickLine(g, start.x, start.y, end2.x, end2.y, lineWidth, lineHeight);
                             }
-                        } 
+                       } 
                         
                 	}
                     
