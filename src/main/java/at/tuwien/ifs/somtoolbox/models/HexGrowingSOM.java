@@ -1,7 +1,11 @@
 package at.tuwien.ifs.somtoolbox.models;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.util.logging.Logger;
+
+import javax.imageio.ImageIO;
 
 import org.apache.commons.lang.NotImplementedException;
 
@@ -28,6 +32,7 @@ import at.tuwien.ifs.somtoolbox.properties.FileProperties;
 import at.tuwien.ifs.somtoolbox.properties.PropertiesException;
 import at.tuwien.ifs.somtoolbox.properties.SOMProperties;
 import at.tuwien.ifs.somtoolbox.util.StdErrProgressWriter;
+import at.tuwien.ifs.somtoolbox.visualization.FuzzyColourCodingVisualiser;
 
 import com.martiansoftware.jsap.JSAPResult;
 
@@ -158,6 +163,17 @@ public class HexGrowingSOM extends GrowingSOM {
         Logger.getLogger("at.tuwien.ifs.somtoolbox").info(
                 "finished" + networkModelName + "(" + som.getLayer().getGridLayout() + ", "
                         + som.getLayer().getGridTopology() + ")");
+        
+        FuzzyColourCodingVisualiser visualizer = new FuzzyColourCodingVisualiser();
+        try {
+			BufferedImage img = visualizer.createVisualization(0, som, 5000, 5000);
+			File outputfile = new File(fileProps.outputDirectory() + "/som.png");
+		    ImageIO.write(img, "png", outputfile);
+		} catch (SOMToolboxException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
     }
 
 	private class IntermediateSOMDumper implements TrainingInterruptionListener {
@@ -168,7 +184,7 @@ public class HexGrowingSOM extends GrowingSOM {
 	        this.fileProperties = fileProperties;
 	    }
 
-	    @Override
+	   // @Override
 	    public void interruptionOccurred(int currentIteration, int numIterations) {
 	        // FIXME: maybe skip writing the SOM at 0 iterations (0 mod x == 0 ...)
 	        String filename = fileProperties.namePrefix(false) + "_" + currentIteration;
